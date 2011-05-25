@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html manifest="randomhead.manifest">
+  <head>
+    <title>Randomhead | romulusetrem.us</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"/>
+    <meta name="viewport" content="user-scalable=no, width=device-width"/>
+    <link rel="apple-touch-icon-precomposed" href="icon.png"/>
+    <link rel="stylesheet" type="text/css" href="randomhead.css"/>
+    <script src="populus.js"></script>
+    <script src="randomhead.js"></script>
+  </head>
+  <body onorientationchange="event.preventDefault;">
+    <div id="head">
+      <div class="top"></div>
+      <div class="middle"></div>
+      <div class="bottom"></div>
+      <div id="loading"></div>
+    </div>
+    <div id="buttons">
+      <div id="done-button" style="display:none">Done</div>
+      <div id="save-button">Save</div>
+      <div id="twod-button">2D</div>
+      <div id="threed-button">3D</div>
+      <div id="refresh-button">Refresh</div>
+    </div>
+    <div id="images">
+      <img src="img/1.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/2.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/3.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/4.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/5.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/6.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/7.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/8.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/9.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/10.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/11.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/12.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/13.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/14.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/15.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/16.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/17.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/18.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/19.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/afro.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/beardo.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/biker.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/boucles.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/casquette.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/chignon.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/clindoeil.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/cocard.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/cochon.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/colonel.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/couronne.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/cyclope.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/hipster.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/marin.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/melon.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/mona.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/morve.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/oeil.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/oh.png" alt="a random head" onload="loaded_image(event);"/>
+      <img src="img/pipe.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/ramon.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/robot.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/squelette.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/superman.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/tennisman.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/topless.png" alt="a random head"
+        onload="loaded_image(event);"/>
+      <img src="img/toque.png" alt="a random head"
+        onload="loaded_image(event);"/>
+    </div>
+    <script>
+
+var LOADING = document.getElementById("loading");
+"Loading heads........".split("").forEach(function(c, i) {
+    var div = document.createElement("div");
+    div.className = "character";
+    div.innerHTML = c;
+    div.style.left = (i * 48) + "px";
+    div.style.WebkitAnimationDelay = (i * 0.11) + "s";
+    LOADING.appendChild(div);
+  });
+
+    </script>
+  </body>
+</html>
