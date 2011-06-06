@@ -2,28 +2,21 @@
 <html manifest="randomhead.manifest">
   <head>
     <title>Randomhead | romulusetrem.us</title>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"/>
-    <meta name="viewport" content="user-scalable=no, width=device-width"/>
-    <link rel="apple-touch-icon-precomposed" href="icon.png"/>
-    <link rel="stylesheet" type="text/css" href="randomhead.css"/>
+      content="black-translucent">
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <link rel="apple-touch-icon-precomposed" href="icon.png">
+    <link rel="stylesheet" type="text/css" href="randomhead.css">
     <script src="populus.js"></script>
-    <script src="randomhead.js"></script>
   </head>
-  <body onorientationchange="event.preventDefault;">
+  <body onorientationchange="event.preventDefault();">
     <div id="head">
       <div class="top"></div>
       <div class="middle"></div>
       <div class="bottom"></div>
-      <div id="loading"></div>
-    </div>
-    <div id="buttons">
-      <div id="done-button" style="display:none">Done</div>
-      <div id="save-button">Save</div>
-      <div id="twod-button">2D</div>
-      <div id="threed-button">3D</div>
-      <div id="refresh-button">Refresh</div>
+      <div id="loading">LOADING</div>
     </div>
     <div id="images">
       <img src="img/1.png" alt="a random head" onload="loaded_image(event);"/>
@@ -99,18 +92,6 @@
       <img src="img/toque.png" alt="a random head"
         onload="loaded_image(event);"/>
     </div>
-    <script>
-
-var LOADING = document.getElementById("loading");
-"Loading heads........".split("").forEach(function(c, i) {
-    var div = document.createElement("div");
-    div.className = "character";
-    div.innerHTML = c;
-    div.style.left = (i * 48) + "px";
-    div.style.WebkitAnimationDelay = (i * 0.11) + "s";
-    LOADING.appendChild(div);
-  });
-
-    </script>
+    <script src="randomhead.js"></script>
   </body>
 </html>

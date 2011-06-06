@@ -1,4 +1,6 @@
-body { width: 320px; font-family: "Helvetica Neue", Helvetica, sans-serif; position: relative; }
+body { width: 320px; font-family: "Helvetica Neue", Helvetica, sans-serif;
+  position: relative; }
+
 @media screen and (max-device-width: 480px) {
   body {
     margin: 0 auto;
@@ -8,6 +10,7 @@ body { width: 320px; font-family: "Helvetica Neue", Helvetica, sans-serif; posit
   #buttons { bottom: 0; right: 0 }
   #save-button { display: none; }
 }
+
 @media screen and (min-device-width: 481px) {
   body {
     margin: auto;
@@ -16,51 +19,19 @@ body { width: 320px; font-family: "Helvetica Neue", Helvetica, sans-serif; posit
   }
   #buttons { right: 0 }
 }
+
 #head { position: relative; width: 320px; height: 480px; overflow: hidden; }
+
 #head div { width: 640px; overflow: hidden;
   -moz-transition-property: -moz-transform;
   -moz-transition-timing-function: ease-in-out;
   -webkit-transition-property: transform;
   -webkit-transition-timing-function: ease-in-out; }
+
 #head div img { width: 320px; }
+
+#images { display: none; }
+
 .top { height: 185px; }
 .middle { height: 121px; }
 .bottom { height: 174px; }
-#buttons { position: absolute; display: none; }
-#buttons div { padding: 4px; border: solid 2px black;
-  background-color: white; font-weight: bold;
-  -webkit-border-radius: 8px; -moz-border-radius: 8px; cursor: default;
-  display: inline-block; margin: 0 8px 4px 0;
-  -moz-box-shadow: 4px 4px 0px black; -webkit-box-shadow: 4px 4px 0px black; }
-#buttons .pushed { -moz-box-shadow: 0 0 0; -webkit-box-shadow: 0 0 0;
-  -moz-transform: translate(4px, 4px); -webkit-transform: translate(4px, 4px); }
-#images { display: none; }
-.disabled { opacity: 0.5 }
-
-@-webkit-keyframes scrollh {
-  0% { -webkit-transform: translate3d(360px, 0, 0); }
-  100% { -webkit-transform: translate3d(-1200px, 0, 0); }
-}
-
-@-webkit-keyframes scrollv {
-  0% { -webkit-transform: translate3d(0, 100px, 0); }
-  100% { -webkit-transform: translate3d(0, 340px, 0); }
-}
-
-#loading { top: 0px; height: 480px; width: 1024px !important;
-  position: absolute;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-name: scrollh;
-  -webkit-animation-duration: 5.5s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-}
-
-.character { position: absolute;
-  font-family: "Helvetica Neue", Helvetica, sans-serif; font-size: 48px;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-name: scrollv;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-  -webkit-animation-duration: 1s;
-}

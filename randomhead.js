@@ -1,6 +1,132 @@
+var images = [].slice.call(document.querySelectorAll("#images img"), 0);
+
+// Draw one image in the strip and append it (we only need to draw two images
+// in a strip anyway.) Return the drawn image for the given src
+function draw_in_strip(strip, src)
+{
+  var img = document.createElement("img");
+  strip.appendChild(img);
+  img.src = src;
+  set_translation(img, 0, -strip.offsetTop);
+  return img;
+}
+
+function draw_strip(strip)
+{
+  var slider = {
+
+    img0: draw_in_strip(strip, strip._images[strip._i].src),
+    l: strip._images.length,
+    w: strip.offsetWidth / 2,
+    x0: null,
+
+    handleEvent: function(e)
+    {
+      var p = populus.event_client_pos(e);
+      if (e.name === "mousedown" || e.name === "touchstart") {
+        e.preventDefault();
+        this.x0 = this.x1 = p.x;
+        this.x2 = 0;
+        this.i = strip._i;
+        this.img1 = draw_in_strip(strip, strip._images[(this.i + 1) % l].src);
+      } else if (e.name === "mousemove" || e.name === "touchmove") {
+        if (this.x0 !== null) {
+          this.x1 = p.x;
+          var x = this.x1 - this.x0 + this.x2;
+          if (x > 0) {
+            this.img1.src = strip._images[i].src;
+            this.i = (l + this.i - 1) % l;
+            this.img0.src = strip._images[this.i].src;
+            x -= this.w;
+            this.x2 -= this.w;
+          } else if (x < -w) {
+            this.i = (this.i + 1) % l;
+            img0.src = strip._images[this.i].src;
+            img1.src = strip._images[(i + 1) % l].src;
+            this.x += this.w;
+            this.x2 += this.w;
+          }
+          set_translation(strip, x, 0);
+        }
+      } else if (e.name === "mouseup" || e.name === "touchup") {
+      }
+    }
+
+  };
+
+  slider.img0.addEventListener("mousedown", slider, false);
+  document.addEventListener("mousemove", slider, false);
+  document.addEventListener("mouseup", slider, false);
+  slider.img0.addEventListener("touchstart", slider, false);
+  slider.img0.addEventListener("touchmove", slider, false);
+  slider.img0.addEventListener("touchend", slider, false);
+}
+
+function init_shaking()
+{
+  if (window.DeviceMotionEvent) {
+    // Shake sensitivity (a lower number is more)
+    var sensitivity = 20;
+    // Position variables
+    var x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
+    // Listen to motion events and update the position
+    window.addEventListener("devicemotion", function (e) {
+        x1 = e.accelerationIncludingGravity.x;
+        y1 = e.accelerationIncludingGravity.y;
+        z1 = e.accelerationIncludingGravity.z;
+      }, false);
+    // Periodically check the position and fire
+    // if the change is greater than the sensitivity
+    setInterval(function () {
+        var change = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
+        if (change > sensitivity) refresh();
+        // Update new position
+        x2 = x1;
+        y2 = y1;
+        z2 = z1;
+      }, 150);
+  }
+}
+
+loaded_image = (function() {
+
+  var loaded = 0;
+
+  // When we have loaded all images we can start!
+  return function(e)
+  {
+    if (++loaded === images.length) {
+      document.getElementById("loading").style.display = "none";
+      init_shaking();
+      refresh();
+    }
+  };
+})();
+
+// Refresh strips and image lists
+function refresh()
+{
+  var strips = document.getElementById("head").querySelectorAll("div");
+  for (var i = 0, n = strips.length; i < n; ++i) {
+    strips[i].innerHTML = "";
+    strips[i]._images = populus.shuffle(images);
+    strips[i]._i = 0;
+    draw_strip(strips[i]);
+  }
+}
+
+// Handy shorthand for setting the translation property of an element
+function set_translation(elem, x, y)
+{
+  elem.style.OTransform =
+  elem.style.MozTransform =
+    "translate({0}px, {1}px)".fmt(x, y);
+  elem.style.WebkitTransform = "translate3d({0}px, {1}px, 0)".fmt(x, y);
+}
+
+/*
 var ANIM_RATE = 1200;
 var IMAGES = null;
-var LOADED = 0;
 var BUTTONS = {
   "done-button": done,
   "refresh-button": refresh,
@@ -11,23 +137,12 @@ var BUTTONS = {
 var THREE_D = false;
 
 // Done with the saved image; go back to the main UI
-function done(button)
+function done(e)
 {
   var saved = document.getElementById("saved");
   if (saved) saved.parentNode.removeChild(saved);
   document.getElementById("save-button").className = "";
-  button.style.display = "none";
-}
-
-// Draw one image in the strip and append it (we only need to draw two images
-// in a strip anyway.) Return the drawn image for the given src
-function draw_in_strip(strip, src)
-{
-  var img = document.createElement("img");
-  strip.appendChild(img);
-  img.src = src;
-  translate(img, 0, -strip.offsetTop);
-  return img;
+  e.source.elem.style.display = "none";
 }
 
 // Draw the current image for the strip and setup the event listeners for this
@@ -136,70 +251,11 @@ function draw_strip(strip)
 }
 
 
-function init_shaking()
-{
-  if (window.DeviceMotionEvent) {
-    // Shake sensitivity (a lower number is more)
-    var sensitivity = 20;
-    // Position variables
-    var x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
-    // Listen to motion events and update the position
-    window.addEventListener("devicemotion", function (e) {
-        x1 = e.accelerationIncludingGravity.x;
-        y1 = e.accelerationIncludingGravity.y;
-        z1 = e.accelerationIncludingGravity.z;
-      }, false);
-    // Periodically check the position and fire
-    // if the change is greater than the sensitivity
-    setInterval(function () {
-        var change = Math.abs(x1 - x2 + y1 - y2 + z1 - z2);
-        if (change > sensitivity) refresh();
-        // Update new position
-        x2 = x1;
-        y2 = y1;
-        z2 = z1;
-      }, 150);
-  }
-}
-
-// When we have loaded all images we can start!
-function loaded_image(e)
-{
-  if (!IMAGES) {
-    IMAGES = [].slice.call(document.querySelectorAll("#images img"), 0);
-  }
-  if (++LOADED=== IMAGES.length) {
-    document.getElementById("loading").style.display = "none";
-    make_buttons();
-    init_shaking();
-    toggle_3d(true);
-    refresh();
-  }
-}
-
 // Make a button out of an element
 function make_button(button, f)
 {
-  var down = function(e) {
-    e.preventDefault();
-    if (button.className !== "disabled") button.className = "pushed";
-  };
-  var out = function(e) {
-    e.preventDefault();
-    if (button.className === "pushed") button.className = "";
-  }
-  var up = function(e) {
-    if (e) e.preventDefault();
-    if (button.className === "pushed") {
-      button.className = "";
-      f(button);
-    }
-  }
-  button.addEventListener("mousedown", down, false);
-  button.addEventListener("touchstart", down, false);
-  button.addEventListener("mouseout", out, false);
-  button.addEventListener("mouseup", up, false);
-  button.addEventListener("touchend", up, false);
+  var b = populus.activatable.$new(button);
+  b.add_listener("@activated", f);
 }
 
 // Setup all buttons
@@ -207,20 +263,6 @@ function make_buttons()
 {
   document.getElementById("buttons").style.display = "block";
   for (var id in BUTTONS) make_button(document.getElementById(id), BUTTONS[id]);
-}
-
-// Refresh strips and image lists
-function refresh()
-{
-  done(document.getElementById("done-button"));
-  var strips = document.getElementById("head").querySelectorAll("div");
-  for (var i = 0, n = strips.length; i < n; ++i) {
-    strips[i].innerHTML = "";
-    strips[i]._images = populus.shuffle(IMAGES);
-    strips[i]._i = 0;
-    draw_strip(strips[i]);
-    //show_off(strips[i]);
-  }
 }
 
 // Save the current face to an image
@@ -285,14 +327,4 @@ function toggle_3d(on)
   document.getElementById("twod-button").style.display = on ? "" : "none";
 }
 
-// Handy shorthand for setting the translation property of an element
-function translate(elem, x, y)
-{
-  elem.style.OTransform =
-  elem.style.MozTransform =
-    "translate({0}px, {1}px)".fmt(x, y);
-  elem.style.WebkitTransform =
-    THREE_D ?
-      "translate3d({0}px, {1}px, 0)".fmt(x, y) :
-      "translate({0}px, {1}px)".fmt(x, y);
-}
+*/
